@@ -30,6 +30,7 @@ class Config:
         'Cloud Computing & DevOps',
         'Cybersecurity Essentials',
         'Blockchain Technology',
+        'Node.js Expert',
     ]
 
 

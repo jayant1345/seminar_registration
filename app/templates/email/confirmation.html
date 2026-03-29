@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registration Confirmed</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f4f4;font-family:Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" style="padding:40px 20px;">
+      <table width="600" cellpadding="0" cellspacing="0"
+             style="background:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.1);">
+
+        <!-- Header -->
+        <tr>
+          <td style="background:#0d6efd;padding:30px;text-align:center;">
+            <h1 style="color:#ffffff;margin:0;font-size:24px;">
+              &#127891; Registration Confirmed!
+            </h1>
+          </td>
+        </tr>
+
+        <!-- Body -->
+        <tr>
+          <td style="padding:30px;">
+            <p style="font-size:16px;color:#333;">Dear <strong>{{ participant.name }}</strong>,</p>
+            <p style="color:#555;">
+              You have successfully registered for the seminar. Here are your details:
+            </p>
+
+            <table width="100%" cellpadding="8" cellspacing="0"
+                   style="border-collapse:collapse;margin:20px 0;">
+              <tr style="background:#f0f4ff;">
+                <td style="font-weight:bold;color:#0d6efd;border-bottom:1px solid #e0e0e0;">Registration ID</td>
+                <td style="border-bottom:1px solid #e0e0e0;color:#333;">{{ participant.registration_id }}</td>
+              </tr>
+              <tr>
+                <td style="font-weight:bold;color:#555;border-bottom:1px solid #e0e0e0;">Seminar</td>
+                <td style="border-bottom:1px solid #e0e0e0;color:#333;">{{ participant.seminar }}</td>
+              </tr>
+              <tr style="background:#f9f9f9;">
+                <td style="font-weight:bold;color:#555;border-bottom:1px solid #e0e0e0;">Name</td>
+                <td style="border-bottom:1px solid #e0e0e0;color:#333;">{{ participant.name }}</td>
+              </tr>
+              <tr>
+                <td style="font-weight:bold;color:#555;border-bottom:1px solid #e0e0e0;">Email</td>
+                <td style="border-bottom:1px solid #e0e0e0;color:#333;">{{ participant.email }}</td>
+              </tr>
+              <tr style="background:#f9f9f9;">
+                <td style="font-weight:bold;color:#555;">Organization</td>
+                <td style="color:#333;">{{ participant.organization }}</td>
+              </tr>
+            </table>
+
+            <p style="color:#555;">
+              Please keep your <strong>Registration ID</strong> handy. Present it
+              (or the QR code on your confirmation page) at the venue for check-in.
+            </p>
+            <p style="color:#999;font-size:13px;">
+              If you did not register, please ignore this email.
+            </p>
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="background:#f8f8f8;padding:20px;text-align:center;border-top:1px solid #ececec;">
+            <p style="margin:0;color:#aaa;font-size:12px;">
+              &copy; 2024 SeminarHub. All rights reserved.
+            </p>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

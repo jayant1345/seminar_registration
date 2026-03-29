@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block title %}All Registrations – Admin{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+  <h3 class="fw-bold mb-0">
+    <i class="bi bi-table me-2 text-primary"></i>All Registrations
+  </h3>
+  <div class="d-flex gap-2">
+    <a href="{{ url_for('admin.export_csv') }}" class="btn btn-success btn-sm">
+      <i class="bi bi-filetype-csv me-1"></i>CSV
+    </a>
+    <a href="{{ url_for('admin.export_excel') }}" class="btn btn-success btn-sm">
+      <i class="bi bi-file-earmark-excel me-1"></i>Excel
+    </a>
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-speedometer2 me-1"></i>Dashboard
+    </a>
+    <a href="{{ url_for('admin.logout') }}" class="btn btn-outline-danger btn-sm">
+      <i class="bi bi-box-arrow-right me-1"></i>Logout
+    </a>
+  </div>
+</div>
+
+<!-- Search / Filter -->
+<form method="GET" action="{{ url_for('admin.registrations') }}"
+      class="card border-0 shadow-sm p-3 mb-4">
+  <div class="row g-2">
+    <div class="col-md-6">
+      <input type="text" name="search" class="form-control"
+             placeholder="Search by name, email, phone, reg ID…"
+             value="{{ search }}" />
+    </div>
+    <div class="col-md-4">
+      <select name="seminar" class="form-select">
+        <option value="">All Seminars</option>
+        {% for s in seminars %}
+        <option value="{{ s }}" {% if seminar_filter == s %}selected{% endif %}>{{ s }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2 d-grid">
+      <button type="submit" class="btn btn-primary">
+        <i class="bi bi-search me-1"></i>Filter
+      </button>
+    </div>
+  </div>
+</form>
+
+<!-- Results count -->
+<p class="text-muted small mb-2">
+  Showing {{ participants.items | length }} of {{ participants.total }} record(s).
+</p>
+
+<!-- Table -->
+<div class="card border-0 shadow-sm">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Reg ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Organization</th>
+            <th>Seminar</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in participants.items %}
+          <tr>
+            <td class="text-muted small">{{ loop.index + (participants.page - 1) * 20 }}</td>
+            <td><span class="badge bg-primary">{{ p.registration_id }}</span></td>
+            <td>{{ p.name }}</td>
+            <td class="text-muted small">{{ p.email }}</td>
+            <td class="text-muted small">{{ p.phone }}</td>
+            <td class="text-muted small">{{ p.organization }}</td>
+            <td><span class="badge bg-secondary">{{ p.seminar[:25] }}{% if p.seminar|length > 25 %}…{% endif %}</span></td>
+            <td class="text-muted small">{{ p.timestamp.strftime('%d %b %Y') }}</td>
+            <td>
+              <form method="POST"
+                    action="{{ url_for('admin.delete_participant', participant_id=p.id) }}"
+                    onsubmit="return confirm('Delete registration {{ p.registration_id }}?')">
+                <button type="submit" class="btn btn-outline-danger btn-sm">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="9" class="text-center text-muted py-5">
+              <i class="bi bi-inbox fs-2 d-block mb-2"></i>
+              No registrations found.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Pagination -->
+{% if participants.pages > 1 %}
+<nav class="mt-4" aria-label="Pagination">
+  <ul class="pagination justify-content-center">
+    <li class="page-item {% if not participants.has_prev %}disabled{% endif %}">
+      <a class="page-link"
+         href="{{ url_for('admin.registrations', page=participants.prev_num, search=search, seminar=seminar_filter) }}">
+        &laquo;
+      </a>
+    </li>
+    {% for num in participants.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+      {% if num %}
+      <li class="page-item {% if num == participants.page %}active{% endif %}">
+        <a class="page-link"
+           href="{{ url_for('admin.registrations', page=num, search=search, seminar=seminar_filter) }}">
+          {{ num }}
+        </a>
+      </li>
+      {% else %}
+      <li class="page-item disabled"><span class="page-link">…</span></li>
+      {% endif %}
+    {% endfor %}
+    <li class="page-item {% if not participants.has_next %}disabled{% endif %}">
+      <a class="page-link"
+         href="{{ url_for('admin.registrations', page=participants.next_num, search=search, seminar=seminar_filter) }}">
+        &raquo;
+      </a>
+    </li>
+  </ul>
+</nav>
+{% endif %}
+{% endblock %}

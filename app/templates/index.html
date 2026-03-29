@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block title %}Home – SeminarHub{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<div class="hero-section text-center text-white rounded-4 py-5 mb-5">
+  <div class="py-3">
+    <h1 class="display-5 fw-bold mb-3">
+      <i class="bi bi-mortarboard me-2"></i>Welcome to SeminarHub
+    </h1>
+    <p class="lead mb-4 opacity-90">
+      Register for our upcoming seminars and expand your knowledge.
+    </p>
+    <a href="{{ url_for('main.register') }}"
+       class="btn btn-light btn-lg px-5 fw-semibold shadow">
+      <i class="bi bi-person-plus me-2"></i>Register Now
+    </a>
+  </div>
+</div>
+
+<!-- Stats card -->
+<div class="row justify-content-center mb-5">
+  <div class="col-md-4 col-sm-6 mb-3">
+    <div class="card text-center border-0 shadow-sm">
+      <div class="card-body py-4">
+        <div class="display-4 fw-bold text-primary">{{ total }}</div>
+        <p class="text-muted mb-0 mt-1">Total Registrations</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-6 mb-3">
+    <div class="card text-center border-0 shadow-sm">
+      <div class="card-body py-4">
+        <div class="display-4 fw-bold text-success">{{ seminar_stats | length }}</div>
+        <p class="text-muted mb-0 mt-1">Available Seminars</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Seminar cards -->
+<h3 class="fw-bold mb-4 text-center">
+  <i class="bi bi-collection me-2"></i>Available Seminars
+</h3>
+<div class="row g-4">
+  {% set icons = ['robot', 'code-slash', 'bar-chart-line', 'cloud', 'shield-check', 'link-45deg'] %}
+  {% for stat in seminar_stats %}
+  <div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm seminar-card">
+      <div class="card-body text-center p-4">
+        <div class="seminar-icon mb-3">
+          <i class="bi bi-{{ icons[loop.index0 % icons|length] }} fs-1 text-primary"></i>
+        </div>
+        <h5 class="card-title fw-semibold">{{ stat.name }}</h5>
+        <span class="badge bg-primary-subtle text-primary mt-2">
+          {{ stat.count }} registered
+        </span>
+      </div>
+      <div class="card-footer bg-transparent border-0 text-center pb-4">
+        <a href="{{ url_for('main.register') }}?seminar={{ stat.name | urlencode }}"
+           class="btn btn-outline-primary btn-sm px-4">
+          Register <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

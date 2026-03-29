@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block title %}Registration Successful – SeminarHub{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-7 col-md-9">
+
+    <!-- Success banner -->
+    <div class="text-center mb-4">
+      <div class="success-checkmark mb-3">
+        <i class="bi bi-check-circle-fill text-success" style="font-size:4rem;"></i>
+      </div>
+      <h2 class="fw-bold text-success">Registration Successful!</h2>
+      <p class="text-muted lead">
+        You are registered for <strong>{{ participant.seminar }}</strong>.
+        A confirmation email has been sent to <strong>{{ participant.email }}</strong>.
+      </p>
+    </div>
+
+    <!-- Registration card -->
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-header bg-primary text-white py-3">
+        <h5 class="mb-0 fw-semibold">
+          <i class="bi bi-receipt me-2"></i>Registration Details
+        </h5>
+      </div>
+      <div class="card-body">
+        <table class="table table-borderless mb-0">
+          <tbody>
+            <tr>
+              <th class="text-muted fw-normal" width="40%">Registration ID</th>
+              <td><span class="badge bg-primary fs-6">{{ participant.registration_id }}</span></td>
+            </tr>
+            <tr>
+              <th class="text-muted fw-normal">Full Name</th>
+              <td>{{ participant.name }}</td>
+            </tr>
+            <tr>
+              <th class="text-muted fw-normal">Email</th>
+              <td>{{ participant.email }}</td>
+            </tr>
+            <tr>
+              <th class="text-muted fw-normal">Phone</th>
+              <td>{{ participant.phone }}</td>
+            </tr>
+            <tr>
+              <th class="text-muted fw-normal">Organization</th>
+              <td>{{ participant.organization }}</td>
+            </tr>
+            <tr>
+              <th class="text-muted fw-normal">Seminar</th>
+              <td>{{ participant.seminar }}</td>
+            </tr>
+            <tr>
+              <th class="text-muted fw-normal">Registered At</th>
+              <td>{{ participant.timestamp.strftime('%d %b %Y, %H:%M') }} UTC</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- QR Code -->
+    {% if qr_code %}
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-body text-center p-4">
+        <h6 class="fw-semibold mb-3">
+          <i class="bi bi-qr-code me-2"></i>Your QR Code
+        </h6>
+        <img src="data:image/png;base64,{{ qr_code }}"
+             alt="QR Code for {{ participant.registration_id }}"
+             class="img-fluid" style="max-width:200px;" />
+        <p class="text-muted small mt-2">Present this at the seminar entrance.</p>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Actions -->
+    <div class="text-center mt-3">
+      <a href="{{ url_for('main.index') }}" class="btn btn-outline-primary me-2">
+        <i class="bi bi-house me-1"></i>Back to Home
+      </a>
+      <button onclick="window.print()" class="btn btn-outline-secondary">
+        <i class="bi bi-printer me-1"></i>Print / Save
+      </button>
+    </div>
+  </div>
+</div>
+{% endblock %}

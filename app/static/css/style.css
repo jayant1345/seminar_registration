@@ -1,0 +1,77 @@
+/* ============================================================
+   SeminarHub – Custom Stylesheet
+   ============================================================ */
+
+/* Hero gradient */
+.hero-section {
+  background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 50%, #6f42c1 100%);
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Seminar cards hover effect */
+.seminar-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.seminar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(13, 110, 253, 0.15) !important;
+}
+
+/* Form focus ring */
+.form-control:focus,
+.form-select:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.2);
+}
+
+/* Table row hover */
+tbody tr:hover {
+  background-color: #f0f4ff;
+}
+
+/* Badge pill style */
+.badge {
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+/* Admin sidebar feel for card headers */
+.card-header.bg-white {
+  border-bottom: 2px solid #e9ecef;
+}
+
+/* Print: hide nav/footer */
+@media print {
+  nav, footer, .btn, .alert { display: none !important; }
+  .card { box-shadow: none !important; border: 1px solid #ccc !important; }
+}
+
+/* Success checkmark animation */
+.success-checkmark {
+  animation: pop 0.4s ease;
+}
+@keyframes pop {
+  0%   { transform: scale(0.5); opacity: 0; }
+  80%  { transform: scale(1.1); }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+/* Spinner on submit */
+#submitBtn.loading::after {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
